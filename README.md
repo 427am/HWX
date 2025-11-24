@@ -1,6 +1,4 @@
-# HWX
-
-FSU Texas Hold'em
+# FSU Texas Hold'em
 
 Compile using:
 javac -cp src -d out src/poker/Main.java
