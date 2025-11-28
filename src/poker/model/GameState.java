@@ -1,6 +1,7 @@
 package poker.model;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class GameState {
 
@@ -319,11 +320,9 @@ public class GameState {
 
         Player winner = evaluateWinner();
         winnerName = winner.getName();
+        JOptionPane.showMessageDialog(null, "Winner: " + winnerName + " wins $" + pot + ".");
         awardPotToSinglePlayer(players.indexOf(winner));
-        pot = 0;
-        potGold = 0;
-        potRed = 0;
-
+        
         moveToShowdown();
     }
 
