@@ -2,8 +2,6 @@ package poker.model;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class GameState {
 
     // phase constants - track what part of the game it is
