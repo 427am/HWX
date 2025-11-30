@@ -1,0 +1,28 @@
+Contribution Log – Jake Bertorello (jmb23a)
+
+Project: FSU Texas Hold'em and Blackjack
+
+This document describes my individual contributions to the project.
+
+1. Texas Hold'em Logic and Gameplay Features
+- Implemented the blind system, including the assignment and rotation of the Small Blind and Big Blind.
+- Added logic for enforcing blind betting at the start of each hand.
+- Implemented chip distribution logic for awarding the pot to the winning player.
+- Developed the winning message display shown at the end of each round.
+- Assisted with debugging the betting flow and integrating blinds with the rest of the game logic.
+
+2. Blackjack Implementation
+- Implemented the complete game logic for Blackjack.
+- Wrote player turn handling, Hit/Stand logic, and turn progression.
+- Implemented dealer behavior following standard casino rules (hit until 17, stand on 17+).
+- Developed win/lose detection, including Blackjack checks, busts, and comparison logic.
+- Integrated Blackjack card rendering and chip updates into the GUI.
+- Ensured proper game reset and continuation between rounds.
+
+3. Additional Tasks
+- Assisted with integrating GUI components into both games.
+- Helped resolve bugs involving card rendering, turn order, and game state transitions.
+- Worked on overall project organization and testing.
+
+Summary:
+My primary contributions included implementing the blind logic, chip distribution, and winning-message functionality for Texas Hold'em, as well as developing the complete Blackjack gameplay logic and behavior.

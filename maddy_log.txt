@@ -1,0 +1,27 @@
+Contribution Log – Maddy Burns (mrb23g)
+
+Project: FSU Texas Hold'em and Blackjack
+
+This document describes my individual contributions to the project.
+
+1. Graphics and Asset Creation
+- Designed and created all custom FSU-themed card graphics.
+- Designed and created all FSU-themed chip graphics.
+- Ensured all images were sized, formatted, and exported correctly for integration into the GUI.
+
+2. Texas Hold'em Implementation
+- Implemented the majority of the Texas Hold'em game logic.
+- Wrote the dealing system for hole cards and community cards.
+- Implemented the betting system, including call, fold, check, and bet actions.
+- Implemented turn flow for all players.
+- Implemented the Start Turn, End Turn, and Play Again functionality.
+- Added full game progression logic: pre-flop, flop, turn, river, and showdown.
+- Integrated the graphical interface for card rendering, chip updates, and community card display.
+- Wrote core game-state management for Texas Hold'em.
+
+4. Additional Tasks
+- Assisted with debugging card loading issues and GUI positioning.
+- Helped with directory setup, packaging, and image resource organization.
+
+Summary:
+My primary contributions were the full set of card and chip graphics and the majority of the Texas Hold'em implementation, including player actions, turn flow, community card progression, and core game logic.
