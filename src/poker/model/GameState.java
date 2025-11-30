@@ -1,6 +1,7 @@
 package poker.model;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class GameState {
 
@@ -17,6 +18,9 @@ public class GameState {
     private Deck deck; // deck of cards
 
     // track whose turn it is and what the state is
+    private int dealerIndex = 0;
+    private static final int SMALL_BLIND_AMOUNT = 2;
+    private static final int BIG_BLIND_AMOUNT = 5;
     private int currentPlayerIndex; 
     private boolean waitingForPlayerStart;
     private boolean waitingForAction;
@@ -102,6 +106,7 @@ public class GameState {
         currentBet = 0;
         phase = PHASE_PREFLOP;
         winnerName = null;
+        dealerIndex = (dealerIndex + 1) % players.size();
 
         // reset each player state
         for (int i = 0; i < players.size(); i++) {
@@ -116,12 +121,22 @@ public class GameState {
         deck = new Deck();
         community.reset();
 
+        //set blinds
+        int smallBlindIndex = (dealerIndex + 1) % players.size();
+        int bigBlindIndex = (dealerIndex + 2) % players.size();
+        takeChips(smallBlindIndex, SMALL_BLIND_AMOUNT);
+        playerBets[smallBlindIndex] = SMALL_BLIND_AMOUNT;
+        takeChips(bigBlindIndex, BIG_BLIND_AMOUNT);
+        playerBets[bigBlindIndex] = BIG_BLIND_AMOUNT;
+        currentBet = BIG_BLIND_AMOUNT;
+        anyBetThisRound = true;
+
         // deal hole cards
         for (Player p : players)
             p.setHoleCards(deck.dealCard(), deck.dealCard());
 
         // set turn flow
-        currentPlayerIndex = 0;
+        currentPlayerIndex = (bigBlindIndex + 1) % players.size();
         waitingForPlayerStart = true;
         waitingForAction = false;
         waitingForEndTurn = false;
@@ -235,8 +250,8 @@ public class GameState {
 
         // auto win if only one player remains (everyone folded)
         if (activeCount <= 1) {
-            if (lastActive >= 0) awardPotToSinglePlayer(lastActive);
-            moveToShowdown();
+            if (lastActive >= 0)
+                doShowdown();
             return;
         }
 
@@ -303,12 +318,10 @@ public class GameState {
     // showdown
     private void doShowdown() {
 
-        // no winner logic implemented yet
-        winnerName = null;
-
-        pot = 0;
-        potGold = 0;
-        potRed = 0;
+        Player winner = evaluateWinner();
+        winnerName = winner.getName();
+        JOptionPane.showMessageDialog(null, "Winner: " + winnerName + " wins $" + pot + ".");
+        if(!isShowdownPhase())awardPotToSinglePlayer(players.indexOf(winner));
 
         moveToShowdown();
     }
@@ -328,6 +341,42 @@ public class GameState {
         pot = 0;
         potGold = 0;
         potRed = 0;
+    }
+
+    //winner logic
+    private Player evaluateWinner()
+    {
+        ArrayList<Player> activePlayers = new ArrayList<Player>();
+        for(Player p : players)
+        {
+            if(!p.isFolded())
+            {
+                activePlayers.add(p);
+            }
+        }
+        if(activePlayers.size() == 1)
+        {
+            return activePlayers.get(0);
+        }
+        Player winner = null;
+        HandRank bestRank = null;
+        for(Player p : activePlayers)
+        {
+            ArrayList<Card> hand = new ArrayList<Card>();
+            hand.add(p.getCard1());
+            hand.add(p.getCard2());
+            for(Card c : community.getCards())
+            {
+                hand.add(c);
+            }
+            HandRank rank = HandEvaluator.evaluateBestHand(hand);
+            if(bestRank == null || rank.compareTo(bestRank) > 0)
+            {
+                bestRank = rank;
+                winner = p;
+            }
+        }
+        return winner;
     }
 
     // chip logic
