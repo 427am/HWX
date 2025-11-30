@@ -250,8 +250,8 @@ public class GameState {
 
         // auto win if only one player remains (everyone folded)
         if (activeCount <= 1) {
-            if (lastActive >= 0) awardPotToSinglePlayer(lastActive);
-            moveToShowdown();
+            if (lastActive >= 0)
+                doShowdown();
             return;
         }
 
@@ -321,8 +321,8 @@ public class GameState {
         Player winner = evaluateWinner();
         winnerName = winner.getName();
         JOptionPane.showMessageDialog(null, "Winner: " + winnerName + " wins $" + pot + ".");
-        awardPotToSinglePlayer(players.indexOf(winner));
-        
+        if(!isShowdownPhase())awardPotToSinglePlayer(players.indexOf(winner));
+
         moveToShowdown();
     }
 
